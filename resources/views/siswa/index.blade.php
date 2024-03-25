@@ -23,6 +23,7 @@
                             <th class="col-md-3">Nama Barang</th>
                             <th class="col-md-2">Deskripsi</th>
                             <th class="col-md-2">Nomer HP</th>
+                            <th class="col-md-2">Tanggal</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +33,7 @@
                             <td>{{ $item->namabarang }}</td>
                             <td>{{ $item->deskripsi }}</td>
                             <td>{{ $item->nomer }}</td>
+                            <td>{{ $item->created_at->format('d-m-Y H:i:s') }}</td>
                             <td>
                                 <a href='{{ url('siswa/'.$item->namabarang. '/edit') }}' class="btn btn-warning btn-sm">Edit</a>
                                 <form onsubmit="return confirm('Yakin ingin menghapus?')" class="d-inline" action="{{ url('siswa/'.$item->namabarang) }}"

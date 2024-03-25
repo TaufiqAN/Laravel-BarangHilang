@@ -33,7 +33,7 @@
         </div>
         <div class="mb-3 row">
             <label for="jurusan" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10"><button type="submit" class="btn btn-primary" name="submit">Kirim</button></div>
+            <div class="col-sm-10"><button type="submit" class="btn btn-primary" name="submit" type="submit">Kirim</button></div>
             <div class="col-sm-10"><a href="{{ url('siswa') }}" class="btn btn-secondary">Kembali</a></div>
         </div>
     </div>

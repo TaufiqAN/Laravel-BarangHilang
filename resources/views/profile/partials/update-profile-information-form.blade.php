@@ -9,13 +9,20 @@
         </p>
     </header>
 
+    
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
-
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+        
+        {{-- Image --}}
+        <div class="mb-3">
+            <x-input-label for="name" :value="__('Foto')" />
+            <input class="form-control" type="file" id="formFile">
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />

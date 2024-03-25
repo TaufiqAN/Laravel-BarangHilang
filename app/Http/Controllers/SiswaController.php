@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {
+
+        
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +18,7 @@ class SiswaController extends Controller
     {
         $katakunci = $request->katakunci;
 
-        $jumlahbaris = 2;
+        $jumlahbaris = 10;
         if(strlen($katakunci)){
             $data = siswa::where('namabarang','like',"%$katakunci%")
             ->orWhere('deskripsi','like',"%$katakunci%")
@@ -25,6 +27,11 @@ class SiswaController extends Controller
             $data = siswa::orderBy('namabarang', 'desc')->paginate($jumlahbaris);
         }
         return view('dashboard')->with('data', $data);
+    }
+
+    public function beranda(){
+        $data = siswa::all();
+        return view('welcome', compact('data'));
     }
 
     /**
@@ -44,6 +51,8 @@ class SiswaController extends Controller
         Session::flash('gambar',$request->gambar);
         Session::flash('deskripsi',$request->deskripsi);
         Session::flash('nomer',$request->nomer);
+
+        // $request->gambar->store('images', 'public');
 
         $request->validate([
             'gambar'=>'nullable|mimes:png,jpg,jpeg|max:2048',
