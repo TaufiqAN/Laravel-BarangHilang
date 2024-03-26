@@ -19,8 +19,8 @@
                     <thead>
                         <tr>
                             <th class="col-md-3">Gambar</th>
-                            <th class="col-md-3">Nama Barang</th>
-                            <th class="col-md-2">Deskripsi</th>
+                            <th class="col-md-2">Nama Barang</th>
+                            <th class="col-md-3">Deskripsi</th>
                             <th class="col-md-2">Nomer HP</th>
                             <th class="col-md-2">Tanggal</th>
                         </tr>

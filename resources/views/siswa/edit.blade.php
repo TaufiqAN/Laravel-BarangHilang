@@ -17,7 +17,9 @@
         <div class="mb-3 row">
             <label for="jurusan" class="col-sm-2 col-form-label">Upload Gambar</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name='gambar' value="{{ $data->gambar }}" id="gambar">
+                <input class="form-control" type="file" name="gambar" id="gambar">
+
+                {{-- <input type="text" class="form-control" name='gambar' value="{{ $data->gambar }}" id="gambar"> --}}
             </div>
         </div>
         <div class="mb-3 row">

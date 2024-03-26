@@ -11,14 +11,14 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-
+        <link rel="stylesheet" href="{{ asset('css/mine.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
         
     </head>
-    <body class="font-sans antialiased container">
+    <body class="font-sans antialiased bg-primary">
         <div class=" bg-gray-100 fixed-top">
             @include('layouts.navigation')
 
