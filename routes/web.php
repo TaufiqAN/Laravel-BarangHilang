@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use App\Models\siswa;
@@ -42,7 +43,8 @@ Route::get('userbaru',function(){
     return '<h1>Helo User baru</h1>';
 })->middleware(['auth', 'verified', 'role_or_permission:edit-post|admin']);
 
-
+Route::get('/comments', [CommentController::class, 'index']);
+Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
 
 Route::resource('siswa', SiswaController::class);
 

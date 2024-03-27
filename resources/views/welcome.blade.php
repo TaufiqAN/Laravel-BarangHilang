@@ -71,36 +71,50 @@
             </div>
           </section>
 
-        {{-- Footer --}}
-        <footer class="footer mt-auto py-3 bg-dark text-white pt-5 ">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4 d-flex">
-                    <img src="{{ asset('img/favicon.png') }}" alt="">
-                    <div class="d-inline">
-                        <a href="" class="btn btn-success fw-bold btn-lg rounded-pill">FINDER</a>
-                        <p>SMK N 1 BANGSRI</p>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                  <h4 class="fw-bold">Menu Utama</h4>
-                  <p>Beranda</p>
-                  <p>Barang</p>
-                  <p>Testi</p>
-                </div>
-                <div class="col-md-4">
-                  <h4 class="fw-bold">Lokasi</h4>
-                  <p>JL. KH. Achmad Fauzan No. 17 Bangsri Jepara. 
-                    Email : smkn1bangsri@yahoo.co.id</p>
-                </div>
-                <div class="col-md-2">
-                  <h4 class="fw-bold">Follow Us</h4>
-                    <i class="bi bi-instagram pe-3 fs-2"></i>
-                    <i class="bi bi-youtube pe-3 fs-2 text-danger"></i>
-                    <i class="bi bi-facebook fs-2 text-primary"></i>
+          {{-- Testimoni --}}
+          <section class="container">
+              <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                <div class="col">
+                    <h1 class="fw-bold">Testimoni</h1>
+                    <p class="mb-5">Pendapat orang yang telah menemukan barangya kembali</p>
                 </div>
               </div>
-            </div>
-        </footer>
-           
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+              @foreach ($comments as $comment)
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">{{ $comment->content }}</p>
+                  </div>
+                </div>
+              </div>
+              @endforeach
+          </section>
+
+          {{-- Komentar --}}
+          <div class="bg-white">
+            <section class="container">
+              <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                <div class="col">
+                    <h1 class="fw-bold">Komentar</h1>
+                    <p class="mb-5">Berikan komentar setelah menggunakan website ini</p>
+                </div>
+              </div>
+              <form action="{{ route('comments.store') }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">Nama</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nama">
+                </div>
+                <div class="mb-3">
+                  <label  for="exampleFormControlTextarea1" class="form-label">Komenntar</label>
+                  <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto pb-5 pt-5">
+                  <button type="submit" class="btn btn-success">Kirim</button>
+                </div>
+            </form>
+            </section>
+          </div>
  </x-app-layout>

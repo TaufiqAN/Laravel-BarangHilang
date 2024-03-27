@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -18,7 +19,7 @@ class SiswaController extends Controller
     {
         $katakunci = $request->katakunci;
 
-        $jumlahbaris = 10;
+        $jumlahbaris = 2;
         if(strlen($katakunci)){
             $data = siswa::where('namabarang','like',"%$katakunci%")
             ->orWhere('deskripsi','like',"%$katakunci%")
@@ -31,7 +32,8 @@ class SiswaController extends Controller
 
     public function beranda(){
         $data = siswa::all();
-        return view('welcome', compact('data'));
+        $comments = Comment::all();
+        return view('welcome', compact('data', 'comments'));
     }
 
     /**

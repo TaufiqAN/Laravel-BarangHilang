@@ -41,5 +41,7 @@
             @include('komponen.pesan')
             @yield('konten')
         </main>
+
+        
     </body>
 </html>
