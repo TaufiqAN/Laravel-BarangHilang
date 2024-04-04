@@ -18,7 +18,7 @@
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
         
     </head>
-    <body class="font-sans antialiased bg-primary bg-opacity-25">
+    <body class="font-sans antialiased ">
         <div class=" bg-gray-100 fixed-top">
             @include('layouts.navigation')
 
@@ -33,6 +33,7 @@
 
             <!-- Page Content -->
             <main>
+            @include('komponen.pesan')
                 {{ $slot }}
             </main>
 

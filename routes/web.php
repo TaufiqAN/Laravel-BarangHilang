@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use App\Models\siswa;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [SiswaController::class, 'beranda']);   
+Route::get('/', [SiswaController::class, 'beranda'])->name('welcome');   
 
 Route::get('/dashboard', function () {
     return view('dashboard', [
@@ -43,9 +44,11 @@ Route::get('userbaru',function(){
     return '<h1>Helo User baru</h1>';
 })->middleware(['auth', 'verified', 'role_or_permission:edit-post|admin']);
 
-Route::get('/comments', [CommentController::class, 'index']);
 Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
 
 Route::resource('siswa', SiswaController::class);
+
+Route::get('/detail/{id}', [DetailController::class, 'show'])->name('detail.show');
+
 
 require __DIR__.'/auth.php';

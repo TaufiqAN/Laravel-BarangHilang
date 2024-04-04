@@ -2,27 +2,33 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
-                        <img src="{{ asset('img/Logo.png') }}" alt="Logo"  class="d-inline-block align-text-top">
-                    </a>
-                </div>
-
+            <!-- Logo -->
+            <div class="shrink-0 flex items-center">
+                <a href="{{ route('welcome') }}">
+                    {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
+                    <img src="{{ asset('img/Logo.png') }}" alt="Logo"  class="d-inline-block align-text-top">
+                </a>
+            </div>
+            
+            
+            <div class="d-flex">
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" class="text-black fw-bold" :active="request()->routeIs('dashboard')">
-                        {{ __('Home') }}
-                    </x-nav-link>
-                </div>
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link :href="route('dashboard')" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
+                    {{ __('Home') }}
+                </x-nav-link>
+                <x-nav-link id="#122" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
+                    {{ __('Barang') }}
+                </x-nav-link>
+                <x-nav-link :href="route('dashboard')" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
+                    {{ __('Testi') }}
+                </x-nav-link>
             </div>
 
           
             
-           
-
+            
+            
             @if (Route::has('login'))
             @auth
             <!-- Settings Dropdown -->
@@ -47,11 +53,11 @@
                         <x-dropdown-link :href="url('/dashboard')">
                             {{ __('Dashboard') }}
                         </x-dropdown-link>
-
+                        
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
+                            
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -61,7 +67,7 @@
                     </x-slot>
                 </x-dropdown>
             </div>
-
+            
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
@@ -73,7 +79,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
@@ -81,25 +87,25 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-
+        
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
-
+            
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
+                
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
+                    
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
@@ -110,14 +116,15 @@
 
     @else
     <div class="sm: sm:top-0 sm:right-0 p-6 text-right z-10">
-        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-black dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Masuk</a>
-
-         @if (Route::has('register'))
-             <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-black dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Daftar</a>
+        <a href="{{ route('login') }}" class="btn btn-primary">Masuk</a>
+        
+        @if (Route::has('register'))
+        <a href="{{ route('register') }}" class="ml-4 fw-bold btn btn-outline-primary ">Daftar</a>
         @endif
         @endauth
     </div>
     @endif
+    </div>
 </nav>
 
 

@@ -28,7 +28,7 @@
                     <tbody>
                         @foreach ($data as $item)
                         <tr>
-                            <td>{{ $item->gambar }}</td>
+                            <td><img src="{{ asset('storage/' . $item->gambar) }}" alt=""></td>
                             <td>{{ $item->namabarang }}</td>
                             <td>{{ $item->deskripsi }}</td>
                             <td>{{ $item->nomer }}</td>

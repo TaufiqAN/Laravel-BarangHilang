@@ -29,8 +29,8 @@
                     <tbody>
                         @foreach ($data as $item)
                         <tr>
-                            <td>{{ $item->gambar }}</td>
-                            <td>{{ $item->namabarang }}</td>
+                            <td>asasasx</td>
+                            <td>asdaskdjhaj</td>
                             <td>{{ $item->deskripsi }}</td>
                             <td>{{ $item->nomer }}</td>
                             <td>{{ $item->created_at->format('d-m-Y H:i:s') }}</td>

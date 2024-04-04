@@ -19,7 +19,7 @@ class SiswaController extends Controller
     {
         $katakunci = $request->katakunci;
 
-        $jumlahbaris = 2;
+        $jumlahbaris = 10;
         if(strlen($katakunci)){
             $data = siswa::where('namabarang','like',"%$katakunci%")
             ->orWhere('deskripsi','like',"%$katakunci%")
@@ -34,6 +34,7 @@ class SiswaController extends Controller
         $data = siswa::all();
         $comments = Comment::all();
         return view('welcome', compact('data', 'comments'));
+
     }
 
     /**
@@ -50,14 +51,11 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         Session::flash('namabarang',$request->namabarang);
-        Session::flash('gambar',$request->gambar);
         Session::flash('deskripsi',$request->deskripsi);
         Session::flash('nomer',$request->nomer);
 
-        // $request->gambar->store('images', 'public');
-
         $request->validate([
-            'gambar'=>'nullable|mimes:png,jpg,jpeg|max:2048',
+            'gambar'=>'nullable|mimes:png,jpg,jpeg',
             'namabarang'=>'required',
             'deskripsi'=>'required',
             'nomer'=>'required|numeric',
@@ -67,18 +65,16 @@ class SiswaController extends Controller
             'nomer.required'=> 'Nomer HP wajib diisi',
             'nomer.numeric'=> 'Nomer HP wajib dengan angka',
         ]);
-        // $gambar = $request->file('gambar');
-        // $filegambar = time().'.'.$gambar;
-        // $request->gambar->move(public_path('images'), $filegambar);
-
-        // $data = new siswa();
-        // $data->save();
+        
         $data = [
             'namabarang'=>$request->namabarang,
-            // 'gambar'=>$filegambar,
             'deskripsi'=>$request->deskripsi,
             'nomer'=>$request->nomer,
         ];
+
+        if($request->file('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('post-images');
+        }
         siswa::create($data);
         return redirect()->to('siswa')->with('success', 'Berhasil di upload');
     }
