@@ -48,7 +48,12 @@ Route::post('/comments/store', [CommentController::class, 'store'])->name('comme
 
 Route::resource('siswa', SiswaController::class);
 
-Route::get('/detail/{id}', [DetailController::class, 'show'])->name('detail.show');
+Route::get('/barang/{id}', [DetailController::class, 'show'])->name('barang.detail');
+
+Route::get('/search', [SiswaController::class, 'search']);
+
+Route::post('/ketemu/{id}', [SiswaController::class, 'ketemu'])->middleware(['auth', 'verified', 'role:user|admin'])->name('ketemu');
+
 
 
 require __DIR__.'/auth.php';

@@ -22,12 +22,13 @@ class SiswaController extends Controller
         $jumlahbaris = 10;
         if(strlen($katakunci)){
             $data = siswa::where('namabarang','like',"%$katakunci%")
-            ->orWhere('deskripsi','like',"%$katakunci%")
+            // ->orWhere('deskripsi','like',"%$katakunci%")
             ->paginate($jumlahbaris);
         }else{
             $data = siswa::orderBy('namabarang', 'desc')->paginate($jumlahbaris);
         }
         return view('dashboard')->with('data', $data);
+
     }
 
     public function beranda(){
@@ -70,6 +71,7 @@ class SiswaController extends Controller
             'namabarang'=>$request->namabarang,
             'deskripsi'=>$request->deskripsi,
             'nomer'=>$request->nomer,
+            'status'=> 0,
         ];
 
         if($request->file('gambar')) {
@@ -126,6 +128,13 @@ class SiswaController extends Controller
         return redirect()->to('siswa')->with('success', 'Berhasil di update');
     }
 
+    public function ketemu($id)
+    {
+        $data = siswa::findOrFail($id);
+        $data->update(['status' => '1']);
+
+        return redirect()->back()->with('HOREEE', 'Barang sudah ditemukan.');
+    }
     /**
      * Remove the specified resource from storage.
      */

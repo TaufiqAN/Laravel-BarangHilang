@@ -43,7 +43,7 @@
                     <p class="mb-5">Mungkin barangmu ada disini</p>
                 </div>
                 <div class="col">
-                    <form class="d-flex " action="{{ url('siswa') }}" method="get">
+                    <form class="d-flex " action="{{ route('welcome') }}" method="get">
                         <input class="form-control me-1 p-2" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Cari barang" aria-label="Search">
                         <button class="btn btn-success p-3" type="submit"><i class="bi bi-search"></i> </button>
                     </form>
@@ -52,53 +52,101 @@
               {{-- barang --}}
               <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 ">
                 @foreach ($data as $item)
+                @if ($item->status == 0)
                 <div class="col">
                   <div class="card p-3 border border-dark border-1">
                     <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top img-fluid" alt="...">
                     <div class="card-body">
                         <h5 class="card-title fw-bold"><h3>{{ $item->namabarang }}</h3></h5>
-                        <p class="card-text">{{ $item->deskripsi }}</p>
+                        <p class="card-text">
+                          {{ Str::limit($item->deskripsi, 150) }}
+                          </p>
     
                         <div class="row">
                             <div class="col fw-bold text-success">
                               <p> <i class="bi bi-clock me-2"></i> {{ $item->created_at->diffForHumans() }}</p>
                             </div>
                             <div class="col">
-                                <a href='{{ url('siswa/'.$item->namabarang. '/edit') }}' class="btn btn-outline-dark fw-bold btn-sm float-end">Selengkapnya</a>
+                                <a href='{{ route('barang.detail', $item->id) }}' class="btn btn-outline-dark fw-bold btn-sm float-end">Selengkapnya</a>
                             </div>
-                             <a href="{{ route('detail.show', ['id' => $item->namabarang]) }}">Lihat Data Diri</a>
+
                           </div>
                     </div>
                   </div>
                 </div>
+                @endif
                 @endforeach
             </div>
           </section>
 
-          {{-- Testimoni --}}
-          <div class="pb-5">
-            <section class="container">
-              <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
-                <div class="col">
-                  <h1 class="fw-bold">Testimoni</h1>
-                  <p class="mb-5">Pendapat orang yang telah menemukan barangya kembali</p>
-                </div>
+          {{-- Sudah ditemukan --}}
+          <section class="container">
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+              <div class="col">
+                  <h1 class="fw-bold">Barang Yang sudah ketemu</h1>
               </div>
-              <div class="row row-cols-1 row-cols-md-2 g-4 ">
-                @foreach ($comments as $comment)
+              <div class="col">
+                  <form class="d-flex " action="{{ route('welcome') }}" method="get">
+                      <input class="form-control me-1 p-2" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Cari barang" aria-label="Search">
+                      <button class="btn btn-success p-3" type="submit"><i class="bi bi-search"></i> </button>
+                  </form>
+              </div>
+            </div>
+            {{-- barang sudah ditemukan--}}
+            @if($data->count() > 0)
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        @foreach ($data as $item)
+            @if ($item->status == 1)
                 <div class="col">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold">{{ $comment->nama }}</</h5>
-                      <p class="fs-6 text-black-50">{{ $comment->kelas }}</</p>
-                      <p class="card-text fs-6">{{ $comment->komen }}</p>
+                    <div class="card p-3 border border-dark border-1">
+                        <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top img-fluid" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold"><h3>{{ $item->namabarang }}</h3></h5>
+                            <div class="row">
+                                <div class="col fw-bold text-success">
+                                    <p> <i class="bi bi-clock me-2"></i> {{ $item->created_at->diffForHumans() }}</p>
+                                </div>
+                                <div class="col">
+                                    <a href='{{ route('welcome', $item->id) }}' class="btn btn-success  btn-lg float-end">Ratting</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            @endif
+        @endforeach
+      </div> 
+    @endif
+
+        </section>
+
+          {{-- Testimoni --}}
+          <div class="bg-primary bg-opacity-10">
+
+            <div class="pb-5">
+              <section class="container">
+                <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                  <div class="col">
+                    <h1 class="fw-bold">Testimoni</h1>
+                    <p class="mb-5">Pendapat orang yang telah menemukan barangya kembali</p>
                   </div>
                 </div>
-                @endforeach
-              </section>
+                <div class="row row-cols-1 row-cols-md-2 g-4 ">
+                  @foreach ($comments as $comment)
+                  <div class="col">
+                    <div class="card shadow">
+                      <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ $comment->nama }}</</h5>
+                        <p class="fs-6 text-black-50">{{ $comment->kelas }}</</p>
+                        <p class="card-text fs-6">{{ $comment->komen }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  @endforeach
+                </section>
+              </div>
             </div>
-
+              
           {{-- Komentar --}}
           <div class="bg-primary bg-opacity-10" id="122">
             <section class="container">

@@ -10,6 +10,6 @@ class DetailController extends Controller
     public function show($id)
     {
         $data = siswa::findOrFail($id);
-        return view('detail', compact('data',));
+        return view('barang.detail', compact('data'));
     }
 }
