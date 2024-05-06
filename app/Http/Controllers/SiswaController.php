@@ -46,6 +46,20 @@ class SiswaController extends Controller
         return view('siswa.create');
     }
 
+    public function batal($id)
+    {
+        $data = siswa::findOrFail($id);
+
+        if ($data) {
+            $data->status = 0;
+            $data->save();
+
+            return redirect()->back()->with('success', 'Aksi "Batal" berhasil dilakukan.');
+        } else {
+            return redirect()->back()->with('error', 'Barang tidak ditemukan.');
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -124,9 +138,14 @@ class SiswaController extends Controller
             'deskripsi'=>$request->deskripsi,
             'nomer'=>$request->nomer,
         ];
+
+        if($request->file('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('post-images');
+
         siswa::where('namabarang',$id)->update($data);
         return redirect()->to('siswa')->with('success', 'Berhasil di update');
-    }
+    };
+}
 
     public function ketemu($id)
     {

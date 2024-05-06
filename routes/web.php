@@ -5,6 +5,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use App\Models\siswa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,7 @@ Route::get('/', [SiswaController::class, 'beranda'])->name('welcome');
 Route::get('/dashboard', function () {
     return view('dashboard', [
         'data' => siswa::orderBy('id', 'desc')->get(),
+        // 'data' => siswa::where('user_id', auth()->user()->id)->get(),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -54,6 +56,7 @@ Route::get('/search', [SiswaController::class, 'search']);
 
 Route::post('/ketemu/{id}', [SiswaController::class, 'ketemu'])->middleware(['auth', 'verified', 'role:user|admin'])->name('ketemu');
 
+Route::post('/batal/{id}', [SiswaController::class, 'batal'])->name('batal');
 
 
 require __DIR__.'/auth.php';

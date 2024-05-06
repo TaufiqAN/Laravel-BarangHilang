@@ -16,16 +16,20 @@
                   @endif
                 </div> --}}
                   <div class="bg-primary bg-opacity-10">
-                  <section class="hero">
+                  <section class="hero mt-5 mb-5">
                   <div class="container">
                     <div class="row flex-column-reverse flex-sm-row">
-                      <div class="col align-self-center ">
-                              <h1 class="fw-bold display-4">Selamat Datang di F<span class="text-primary">I</span>NDER</h1>
+                      <div class="col-lg-4 align-self-center ">
+                              <h1 class="fw-bold display-4">Selamat <br> Datang di <br> F<span class="text-primary">I</span>NDER</h1>
                               <p class="mb-5">Bertanyalah untuk mencari</p>
+                              @guest
                               <a href="{{ route('register') }}"><button type="button" class="btn btn-primary btn-lg me-3">Get Started <i class="bi bi-arrow-right ms-2"></i></button></a>
+                              @endguest
+                              @auth
                               <a href='{{ url('siswa/create') }}' class="btn btn-outline-primary btn-lg"><i class="bi bi-cloud-plus me-2"></i>Upload</a>
+                              @endauth
                             </div>
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-8 mb-3">
                               <img src="{{ asset('img/hero.png') }}" alt="" class="img-fluid">
                             </div>
                           </div>
@@ -44,7 +48,7 @@
                 </div>
                 <div class="col">
                     <form class="d-flex " action="{{ route('welcome') }}" method="get">
-                        <input class="form-control me-1 p-2" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Cari barang" aria-label="Search">
+                        <input class="form-control me-1 p-2 border border-dark border-1" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Cari barang" aria-label="Search">
                         <button class="btn btn-success p-3" type="submit"><i class="bi bi-search"></i> </button>
                     </form>
                 </div>
@@ -57,7 +61,26 @@
                   <div class="card p-3 border border-dark border-1">
                     <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top img-fluid" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title fw-bold"><h3>{{ $item->namabarang }}</h3></h5>
+                      
+                      @if (Route::has('login'))
+                        @auth
+                            <div class="row mb-4">
+                                <div class="col-lg-3">
+                                    <img src="{{ asset('img/miaw.jpg') }}" class="rounded-circle" alt="...">
+                                </div>
+                                <div class="col-lg-8 align-self-center">
+                                  @if ($item->user)
+                                  <h2 class="fs-5 fw-bold text-secondary">{{ $item->user->name }}</h2>
+                                    @else
+                                  <h2 class="fs-5 fw-bold text-secondary">Pengguna Tidak Diketahui</h2>
+                                   @endif
+                                    <h5 class="bg-success text-light w-20 fs-6"> X PPLG 1</h5>
+                                </div>
+                            </div>
+                        @else
+                        @endauth
+                      @endif
+
                         <p class="card-text">
                           {{ Str::limit($item->deskripsi, 150) }}
                           </p>
@@ -74,55 +97,77 @@
                     </div>
                   </div>
                 </div>
+                {{-- @else
+                <h1 class="text-center">Tidak ada barang yang hilang.</> --}}
                 @endif
                 @endforeach
             </div>
           </section>
 
           {{-- Sudah ditemukan --}}
-          <section class="container">
-            <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
-              <div class="col">
-                  <h1 class="fw-bold">Barang Yang sudah ketemu</h1>
-              </div>
-              <div class="col">
+          <div class="bg-primary bg-opacity-10 pb-5">
+            <section class="container">
+              <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                <div class="col">
+                  <h1 class="fw-bold mb-5">Barang Yang sudah <br> ketemu</h1>
+                </div>
+                <div class="col">
                   <form class="d-flex " action="{{ route('welcome') }}" method="get">
-                      <input class="form-control me-1 p-2" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Cari barang" aria-label="Search">
-                      <button class="btn btn-success p-3" type="submit"><i class="bi bi-search"></i> </button>
+                        <input class="form-control me-1 p-2 border border-dark border-1" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Cari barang" aria-label="Search">
+                        <button class="btn btn-success p-3" type="submit"><i class="bi bi-search"></i> </button>
                   </form>
+                </div>
               </div>
-            </div>
             {{-- barang sudah ditemukan--}}
             @if($data->count() > 0)
-    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-        @foreach ($data as $item)
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+            @foreach ($data as $item)
             @if ($item->status == 1)
-                <div class="col">
-                    <div class="card p-3 border border-dark border-1">
-                        <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold"><h3>{{ $item->namabarang }}</h3></h5>
-                            <div class="row">
-                                <div class="col fw-bold text-success">
-                                    <p> <i class="bi bi-clock me-2"></i> {{ $item->created_at->diffForHumans() }}</p>
-                                </div>
-                                <div class="col">
-                                    <a href='{{ route('welcome', $item->id) }}' class="btn btn-success  btn-lg float-end">Ratting</a>
-                                </div>
-                            </div>
+            <div class="col">
+              <div class="card p-3 border border-dark border-1">
+
+                @if (Route::has('login'))
+                  @auth
+                      <div class="row mb-4">
+                          <div class="col-lg-3">
+                              <img src="{{ asset('img/miaw.jpg') }}" class="rounded-circle img-fluid" alt="...">
+                          </div>
+                          <div class="col-lg-4 align-self-center">
+                            @if ($item->user)
+                            <h2 class="fs-5 fw-bold text-secondary">{{ $item->user->name }}</h2>
+                            @else
+                            <h2 class="fs-5 fw-bold text-secondary">Pengguna Tidak Diketahui</h2>
+                            @endif
+                              <h5 class="bg-success text-light w-20 fs-6"> X PPLG 1</h5>
+                          </div>
+                      </div>
+                  @else
+                  @endauth
+                @endif
+
+                <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top img-fluid" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold"><h2>{{ $item->namabarang }}</h2></h5>
+                        <div class="row">
+                          <div class="col fw-bold text-success">
+                            <p> <i class="bi bi-clock me-2"></i> {{ $item->created_at->diffForHumans() }}</p>
+                          </div>
+                          <div class="col">
+                              <a href='{{ route('welcome', $item->id) }}' class="btn btn-success btn-lg float-end">Ratting</a>
+                          </div>
                         </div>
                     </div>
-                </div>
+              </div>
+            </div>
             @endif
-        @endforeach
-      </div> 
-    @endif
-
-        </section>
-
-          {{-- Testimoni --}}
-          <div class="bg-primary bg-opacity-10">
-
+            @endforeach
+            </div> 
+            @endif
+            </section>
+            </div>
+                            
+                            {{-- Testimoni --}}
+          <div class="">
             <div class="pb-5">
               <section class="container">
                 <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
@@ -136,9 +181,18 @@
                   <div class="col">
                     <div class="card shadow">
                       <div class="card-body">
-                        <h5 class="card-title fw-bold">{{ $comment->nama }}</</h5>
-                        <p class="fs-6 text-black-50">{{ $comment->kelas }}</</p>
-                        <p class="card-text fs-6">{{ $comment->komen }}</p>
+
+                        <div class="row mb-3">
+                          <div class="col-lg-2">
+                            <img src="{{ asset('img/miaw.jpg') }}" class="rounded-circle img-fluid" alt="...">
+                          </div>
+                          <div class="col-lg-10">
+                            <h5 class="card-title fw-bold">{{ $comment->nama }}</</h5>
+                            <p class="fs-6 text-black-50">{{ $comment->kelas }}</</p>
+                          </div>
+
+                        </div>
+                          <p class="card-text fs-6">{{ $comment->komen }}</p>
                       </div>
                     </div>
                   </div>
@@ -161,19 +215,19 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="mb-3">
-                      <label for="exampleFormControlInput1" class="form-label">Nama</label>
+                      <label for="exampleFormControlInput1" class="form-label fs-2">Nama</label>
                       <input name="nama" type="text" class="form-control p-3 border border-dark border-1" id="Nama" value="{{ Session::get('nama') }}" placeholder="Masukkan Nama">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="mb-3">
-                      <label for="exampleFormControlInput1" class="form-label">Kelas</label>
+                      <label for="exampleFormControlInput1" class="form-label fs-2">Kelas</label>
                       <input name="kelas" type="text" class="form-control p-3 border border-dark border-1" id="Kelas" value="{{ Session::get('kelas') }}" placeholder="Masukkan Kelas">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="mb-3">
-                      <label  for="exampleFormControlTextarea1" class="form-label">Komentar</label>
+                      <label  for="exampleFormControlTextarea1" class="form-label fs-2">Komentar</label>
                       <textarea name="komen" class="form-control border border-dark border-1" id="komentar" rows="5" value="{{ Session::get('komen') }}" placeholder="Berikan Komentar"></textarea>
                     </div>
                   </div>

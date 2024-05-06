@@ -3,11 +3,11 @@
 @section('konten')
     
     <!-- START FORM -->
-    <form action='{{ url('siswa/'.$data->namabarang) }}' method='post'>
+    <form action='{{ url('siswa/'.$data->namabarang) }}' method='post' enctype="multipart/form-data">
         @csrf
         @method('PUT')
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        
+        <div class="col-sm-5 mb-3"><a href="{{ url('siswa') }}" class="btn btn-secondary "><i class="bi bi-arrow-left"></i></a></div> 
         <div class="mb-3 row">
             <label for="nama" class="col-sm-2 col-form-label">Nama Barang</label>
             <div class="col-sm-10">
@@ -36,8 +36,7 @@
         </div>
         <div class="mb-3 row">
             <label for="jurusan" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10"><button type="submit" class="btn btn-primary" name="submit">Kirim</button></div>
-            <div class="col-sm-10"><a href="{{ url('siswa') }}" class="btn btn-secondary">Kembali</a></div>
+            <div class="col-sm-5"><button class="btn btn-primary" name="submit" type="submit">Kirim</button></div>
         </div>
     </div>
     </form>
