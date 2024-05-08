@@ -3,7 +3,7 @@
 @section('konten')
     
     <!-- START FORM -->
-    <form action='{{ url('siswa') }}' method='post' enctype="multipart/form-data">
+    <form action='{{ url('dashboard') }}' method='post' enctype="multipart/form-data">
         @csrf
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <div class="col-sm-5 mb-3"><a href="{{ url('siswa') }}" class="btn btn-secondary "><i class="bi bi-arrow-left"></i></a></div> 

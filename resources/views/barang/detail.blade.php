@@ -8,15 +8,17 @@
   </div>
   
     @if (Route::has('login'))
+    @auth
     <div class="row mb-4">
       <div class="col-lg-1">
-          <img src="{{ asset('img/miaw.jpg') }}" class="rounded-circle" alt="...">
+        <img src="{{ asset('img/miaw.jpg') }}" class="rounded-circle" alt="...">
       </div>
-          <div class="col-lg-4 align-self-center">
-            <h2 class="fw-bold "> {{ Auth::user()->name }}</h2>
-            <h5 class="bg-success text-light w-20"> X PPLG 1</h5>
-          </div>
+      <div class="col-lg-4 align-self-center">
+        <h2 class="fw-bold "> {{ Auth::user()->name }}</h2>
+        <h5 class="bg-success text-light w-20"> X PPLG 1</h5>
       </div>
+    </div>
+    @endauth
     @endif
 
     {{-- barang --}}

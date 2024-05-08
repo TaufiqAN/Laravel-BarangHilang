@@ -19,12 +19,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [SiswaController::class, 'beranda'])->name('welcome');   
+Route::get('/', [SiswaController::class, 'beranda'])->name('welcome');  
+
+Route::post('/dashboard', [SiswaController::class, 'store']);
 
 Route::get('/dashboard', function () {
     return view('dashboard', [
-        'data' => siswa::orderBy('id', 'desc')->get(),
-        // 'data' => siswa::where('user_id', auth()->user()->id)->get(),
+        // 'data' => siswa::orderBy('id', 'desc')->get(),
+        'data' => siswa::where('user_id', auth()->user()->id)->get(),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -46,11 +48,15 @@ Route::get('userbaru',function(){
     return '<h1>Helo User baru</h1>';
 })->middleware(['auth', 'verified', 'role_or_permission:edit-post|admin']);
 
-Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
 
-Route::resource('siswa', SiswaController::class);
+// Route::resource('siswa', SiswaController::class);
 
-Route::get('/barang/{id}', [DetailController::class, 'show'])->name('barang.detail');
+Route::middleware(['auth', 'verified', 'role_or_permission:edit-post|admin'])->group(function () {
+    Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+    Route::resource('siswa', SiswaController::class);
+    Route::get('/barang/{id}', [DetailController::class, 'show'])->name('barang.detail');
+});
+
 
 Route::get('/search', [SiswaController::class, 'search']);
 

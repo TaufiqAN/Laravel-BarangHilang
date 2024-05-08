@@ -20,7 +20,7 @@
                   <div class="container">
                     <div class="row flex-column-reverse flex-sm-row">
                       <div class="col-lg-4 align-self-center ">
-                              <h1 class="fw-bold display-4">Selamat <br> Datang di <br> F<span class="text-primary">I</span>NDER</h1>
+                              <h1 class="fw-bold display-4">Selamat <br> Datang di <br> Finder<span class="text-primary">Track</span></h1>
                               <p class="mb-5">Bertanyalah untuk mencari</p>
                               @guest
                               <a href="{{ route('register') }}"><button type="button" class="btn btn-primary btn-lg me-3">Get Started <i class="bi bi-arrow-right ms-2"></i></button></a>
@@ -216,19 +216,19 @@
                   <div class="col-sm-6">
                     <div class="mb-3">
                       <label for="exampleFormControlInput1" class="form-label fs-2">Nama</label>
-                      <input name="nama" type="text" class="form-control p-3 border border-dark border-1" id="Nama" value="{{ Session::get('nama') }}" placeholder="Masukkan Nama">
+                      <input name="nama" type="text" class="form-control p-3 border border-dark border-1" id="Nama" placeholder="Masukkan Nama">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="mb-3">
                       <label for="exampleFormControlInput1" class="form-label fs-2">Kelas</label>
-                      <input name="kelas" type="text" class="form-control p-3 border border-dark border-1" id="Kelas" value="{{ Session::get('kelas') }}" placeholder="Masukkan Kelas">
+                      <input name="kelas" type="text" class="form-control p-3 border border-dark border-1" id="Kelas" placeholder="Masukkan Kelas">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="mb-3">
                       <label  for="exampleFormControlTextarea1" class="form-label fs-2">Komentar</label>
-                      <textarea name="komen" class="form-control border border-dark border-1" id="komentar" rows="5" value="{{ Session::get('komen') }}" placeholder="Berikan Komentar"></textarea>
+                      <textarea name="komen" class="form-control border border-dark border-1" id="komentar" rows="5" placeholder="Berikan Komentar"></textarea>
                     </div>
                   </div>
                 </div>

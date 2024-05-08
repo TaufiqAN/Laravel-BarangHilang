@@ -6,7 +6,7 @@
             <div class="shrink-0 flex items-center">
                 <a href="{{ route('welcome') }}">
                     {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
-                    <img src="{{ asset('img/Logo.png') }}" alt="Logo"  class="d-inline-block align-text-top">
+                    <img src="{{ asset('img/Logo.png') }}" alt="Logo"  class="d-inline-block align-text-top" style="max-width: 200px;">
                 </a>
             </div>
             
@@ -14,13 +14,13 @@
             <div class="d-flex">
                 <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('dashboard')" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
+                <x-nav-link :href="route('welcome')" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
                     {{ __('Home') }}
                 </x-nav-link>
-                <x-nav-link id="#122" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
+                <x-nav-link :href="route('welcome')" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
                     {{ __('Barang') }}
                 </x-nav-link>
-                <x-nav-link :href="route('dashboard')" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
+                <x-nav-link :href="route('welcome')" class="text-black fw-bold text-decoration-none" :active="request()->routeIs('dashboard')">
                     {{ __('Testi') }}
                 </x-nav-link>
             </div>

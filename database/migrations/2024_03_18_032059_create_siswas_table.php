@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('gambar')->nullable();
             $table->text('deskripsi');
             $table->bigInteger('nomer');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

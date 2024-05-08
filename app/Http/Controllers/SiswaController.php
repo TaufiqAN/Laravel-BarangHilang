@@ -86,13 +86,14 @@ class SiswaController extends Controller
             'deskripsi'=>$request->deskripsi,
             'nomer'=>$request->nomer,
             'status'=> 0,
+            'user_id'=> auth()->user()->id
         ];
 
         if($request->file('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('post-images');
         }
         siswa::create($data);
-        return redirect()->to('siswa')->with('success', 'Berhasil di upload');
+        return redirect()->to('dashboard')->with('success', 'Berhasil di upload');
     }
 
     /**
@@ -123,6 +124,7 @@ class SiswaController extends Controller
         Session::flash('nomer',$request->nomer);
 
         $request->validate([
+            'gambar'=>'nullable|mimes:png,jpg,jpeg',
             'namabarang'=>'required',
             'deskripsi'=>'required',
             'nomer'=>'required|numeric',
@@ -139,12 +141,12 @@ class SiswaController extends Controller
             'nomer'=>$request->nomer,
         ];
 
+
         if($request->file('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('post-images');
-
+        }
         siswa::where('namabarang',$id)->update($data);
-        return redirect()->to('siswa')->with('success', 'Berhasil di update');
-    };
+        return redirect()->to('dashboard')->with('success', 'Berhasil di update');
 }
 
     public function ketemu($id)
