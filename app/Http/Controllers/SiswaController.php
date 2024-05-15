@@ -33,7 +33,7 @@ class SiswaController extends Controller
 
     public function beranda(){
         $data = siswa::all();
-        $comments = Comment::all();
+        $comments = Comment::latest()->limit(4)->get();
         return view('welcome', compact('data', 'comments'));
 
     }

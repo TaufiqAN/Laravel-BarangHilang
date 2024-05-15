@@ -12,12 +12,18 @@ class Comment extends Model
         'nama',
         'kelas',
         'komen',
-        'ranting'
+        'rating',
+        'likes',
     ];
 
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'comment_user_likes');
     }
 }

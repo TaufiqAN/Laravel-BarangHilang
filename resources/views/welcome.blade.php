@@ -59,7 +59,7 @@
                 @if ($item->status == 0)
                 <div class="col">
                   <div class="card p-3 border border-dark border-1">
-                    <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top img-fluid" alt="...">
+                    <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top object-fit-cover" style="height: 300px;" alt="...">
                     <div class="card-body">
                       
                       @if (Route::has('login'))
@@ -74,7 +74,7 @@
                                     @else
                                   <h2 class="fs-5 fw-bold text-secondary">Pengguna Tidak Diketahui</h2>
                                    @endif
-                                    <h5 class="bg-success text-light w-20 fs-6"> X PPLG 1</h5>
+                                    <h5 class="bg-success text-light w-20 fs-6"> X PPLG 10</h5>
                                 </div>
                             </div>
                         @else
@@ -82,7 +82,7 @@
                       @endif
 
                         <p class="card-text">
-                          {{ Str::limit($item->deskripsi, 150) }}
+                          {{ Str::limit($item->deskripsi, 120) }}
                           </p>
     
                         <div class="row">
@@ -186,13 +186,36 @@
                           <div class="col-lg-2">
                             <img src="{{ asset('img/miaw.jpg') }}" class="rounded-circle img-fluid" alt="...">
                           </div>
-                          <div class="col-lg-10">
+                          <div class="col-lg-8">
+                            <div class="text-warning">
+                              @for ($i = 0; $i < $comment->rating; $i++)
+                                  <i class="bi bi-star-fill"></i>
+                              @endfor
+                              @for ($i = $comment->rating; $i < 5; $i++)
+                                  <i class="bi bi-star"></i>
+                              @endfor
+                            </div>
                             <h5 class="card-title fw-bold">{{ $comment->nama }}</</h5>
                             <p class="fs-6 text-black-50">{{ $comment->kelas }}</</p>
                           </div>
+                          <div class="col-lg-2">
+                            <div class="like-section">
+                              @auth
+                                  <button class="btn btn-outline-danger btn-sm like-button d-flex align-items-center" data-comment-id="{{ $comment->id }}">
+                                      <i class="bi bi-heart{{ auth()->user()->likedComments->contains($comment->id) ? '-fill text-danger' : '' }} me-2"></i>
+                                      <span class="like-count">{{ $comment->likes }}</span>
+                                  </button>
+                              @else
+                                  <button class="btn btn-outline-danger btn-sm d-flex align-items-center" disabled>
+                                      <i class="bi bi-heart me-2"></i>
+                                      <span class="like-count">{{ $comment->likes }}</span>
+                                  </button>
+                              @endauth
+                          </div>
+                          </div>
 
                         </div>
-                          <p class="card-text fs-6">{{ $comment->komen }}</p>
+                          <p class="card-text fs-6 mb-4">{{ $comment->komen }}</p>
                       </div>
                     </div>
                   </div>
@@ -229,6 +252,20 @@
                     <div class="mb-3">
                       <label  for="exampleFormControlTextarea1" class="form-label fs-2">Komentar</label>
                       <textarea name="komen" class="form-control border border-dark border-1" id="komentar" rows="5" placeholder="Berikan Komentar"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-3">
+                        <label for="rating" class="form-label fs-2">Rating</label>
+                        <br>
+                        <div class="star-rating">
+                            <input type="hidden" name="rating" id="rating" value="0">
+                            <i class="bi bi-star" data-rating="1"></i>
+                            <i class="bi bi-star" data-rating="2"></i>
+                            <i class="bi bi-star" data-rating="3"></i>
+                            <i class="bi bi-star" data-rating="4"></i>
+                            <i class="bi bi-star" data-rating="5"></i>
+                        </div>
                     </div>
                   </div>
                 </div>

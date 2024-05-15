@@ -17,6 +17,14 @@ return new class extends Migration
             $table->string('nama');
             $table->string('kelas');
             $table->integer('rating')->nullable();
+            $table->integer('likes')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('comment_user_likes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('comment_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('comment_user_likes');
         Schema::dropIfExists('comments');
     }
 };

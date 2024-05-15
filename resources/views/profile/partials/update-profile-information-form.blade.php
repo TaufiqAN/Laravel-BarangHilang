@@ -17,11 +17,19 @@
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        {{-- Tampilkan foto profil saat ini --}}
+        <div class="mb-3">
+            <x-input-label for="current-photo" :value="__('Current Photo')" />
+            <div>
+                <img src="{{ $user->photo_url }}" alt="Current Photo" class="rounded-circle" style="width: 150px; height: 150px;">
+            </div>
+        </div>
         
         {{-- Image --}}
         <div class="mb-3">
-            <x-input-label for="name" :value="__('Foto')" />
-            <input class="form-control" type="file" id="formFile">
+            <x-input-label for="photo" :value="__('Photo')" />
+            <input class="form-control" type="file" id="photo" name="photo">
         </div>
 
         <div>

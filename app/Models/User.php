@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'photo',
     ];
 
     /**
@@ -46,5 +47,15 @@ class User extends Authenticatable
 
     public function siswa(){
         return $this->hasMany(siswa::class);
+    }
+
+    public function likedComments()
+    {
+        return $this->belongsToMany(Comment::class, 'comment_user_likes');
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        return $this->photo ? asset('storage/' . $this->photo) : asset('img/default-avatar.png');
     }
 }

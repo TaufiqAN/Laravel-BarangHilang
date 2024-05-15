@@ -11,11 +11,13 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-        <link rel="stylesheet" href="{{ asset('css/mine.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('assets/css/mine.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+        
         
     </head>
     <body class="font-sans antialiased ">
@@ -24,7 +26,7 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow mt-20">
+                <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -44,7 +46,7 @@
                 <div class="col-md-4 d-flex">
                     <img src="{{ asset('img/favicon.png') }}" alt="">
                     <div class="d-inline">
-                        <a href="" class="btn btn-success fw-bold btn-lg rounded-pill">FINDER</a>
+                        <a href="" class="btn btn-success fw-bold btn-lg rounded-pill">FINDER<span class="text-primary">Track</span></a>
                         <p>SMK N 1 BANGSRI</p>
                     </div>
                 </div>
@@ -68,5 +70,69 @@
             </div>
         </footer>
         </div>
+
+        {{-- Love rating --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.like-button').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const commentId = this.getAttribute('data-comment-id');
+                        const likeCountSpan = this.querySelector('.like-count');
+                        const heartIcon = this.querySelector('.bi-heart');
+            
+                        fetch(`/comments/${commentId}/like`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (response.status === 409) {
+                                alert('You have already liked this comment.');
+                                throw new Error('Already liked');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            likeCountSpan.textContent = data.likes;
+                            heartIcon.classList.add('bi-heart-fill', 'text-danger');
+                            heartIcon.classList.remove('bi-heart');
+                        })
+                        .catch(error => console.error('Error:', error));
+                    });
+                });
+            });
+            </script>
+
+            {{-- Rating --}}
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const stars = document.querySelectorAll('.star-rating .bi');
+                    const ratingInput = document.getElementById('rating');
+
+                    stars.forEach(star => {
+                        star.addEventListener('click', function () {
+                            const rating = this.getAttribute('data-rating');
+                            ratingInput.value = rating;
+                            updateStarRating(rating);
+                        });
+                        
+                    });
+
+                    function updateStarRating(rating) {
+                        stars.forEach(star => {
+                            if (star.getAttribute('data-rating') <= rating) {
+                                star.classList.remove('bi-star');
+                                star.classList.add('bi-star-fill');
+                            } else {
+                                star.classList.remove('bi-star-fill');
+                                star.classList.add('bi-star');
+                            }
+                        });
+                    }
+                });
+            </script>
+
     </body>
 </html>

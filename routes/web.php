@@ -53,6 +53,7 @@ Route::get('userbaru',function(){
 
 Route::middleware(['auth', 'verified', 'role_or_permission:edit-post|admin'])->group(function () {
     Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
     Route::resource('siswa', SiswaController::class);
     Route::get('/barang/{id}', [DetailController::class, 'show'])->name('barang.detail');
 });

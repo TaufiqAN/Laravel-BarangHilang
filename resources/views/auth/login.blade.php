@@ -4,7 +4,7 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-        <h1 class="text-center mb-3">Selamat Kembali di FINDER</h1>
+        <h1 class="text-center mb-3">Selamat Kembali di FINDER<span class="text-primary">Track</span></h1>
 
         <!-- Email Address -->
         <div>

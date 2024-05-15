@@ -5,3 +5,20 @@ $body-bg: #f8fafc;
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+// Rating
+.star-rating {
+    direction: ltr;
+    font-size: 2rem;
+    unicode-bidi: bidi-override;
+    display: inline-block;
+    text-align: center;
+}
+.star-rating .bi-star {
+    color: #c6c1c1;
+    cursor: pointer;
+    margin: 5px;
+}
+.star-rating .bi-star-fill {
+    color: #f5c518;
+}
