@@ -44,7 +44,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-4 d-flex">
-                    <img src="{{ asset('img/favicon.png') }}" alt="">
+                    <img src="{{ asset('img/favicon.png') }}" class="img-fluid" style="max-height: 80px" alt="">
                     <div class="d-inline">
                         <a href="" class="btn btn-success fw-bold btn-lg rounded-pill">FINDER<span class="text-primary">Track</span></a>
                         <p>SMK N 1 BANGSRI</p>

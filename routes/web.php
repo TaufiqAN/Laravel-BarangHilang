@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [SiswaController::class, 'beranda'])->name('welcome');  
+Route::get('/', [SiswaController::class, 'beranda'])->name('welcome');
 
 Route::post('/dashboard', [SiswaController::class, 'store']);
 
@@ -36,15 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('admin',function(){
-    return '<h1>Helo Admin</h1>';
-})->middleware(['auth', 'verified', 'role:admin']);
-
-Route::get('user',function(){
-    return '<h1>Helo User</h1>';
+Route::get('user', function () {
+    return view('dashboard', [
+        // 'data' => siswa::orderBy('id', 'desc')->get(),
+        'data' => siswa::where('user_id', auth()->user()->id)->get(),
+    ]);
 })->middleware(['auth', 'verified', 'role:user|admin']);
 
-Route::get('userbaru',function(){
+Route::get('userbaru', function () {
     return '<h1>Helo User baru</h1>';
 })->middleware(['auth', 'verified', 'role_or_permission:edit-post|admin']);
 
@@ -58,12 +58,16 @@ Route::middleware(['auth', 'verified', 'role_or_permission:edit-post|admin'])->g
     Route::get('/barang/{id}', [DetailController::class, 'show'])->name('barang.detail');
 });
 
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::post('barang/toggleSuspend/{id}', [AdminController::class, 'toggleSuspend'])->name('barang.toggleSuspend');
+});
 
-Route::get('/search', [SiswaController::class, 'search']);
+
+// Route::get('/search', [SiswaController::class, 'search']);
 
 Route::post('/ketemu/{id}', [SiswaController::class, 'ketemu'])->middleware(['auth', 'verified', 'role:user|admin'])->name('ketemu');
-
 Route::post('/batal/{id}', [SiswaController::class, 'batal'])->name('batal');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -18,6 +18,13 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Kelas -->
+        <div class="mt-4">
+            <x-input-label for="kelas" :value="__('Kelas :')" />
+            <x-text-input id="kelas" class="block mt-1 w-full" placeholder="Masukkan Kelas" type="text" name="kelas" :value="old('kelas')" required autocomplete="kelas" />
+            <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4 relative">
             <x-input-label for="password" :value="__('Password :')" />
@@ -49,8 +56,8 @@
 
             <!-- Lihat / Sembunyikan Kata Sandi -->
             <div class="absolute right-0 pr-3 flex items-center text-sm leading-5" style="top: 37px">
-                <button type="button" id="togglePassword" class="focus:outline-none">
-                    <i id="toggleIcon" class="bi bi-eye-slash fs-4"></i>
+                <button type="button" id="togglePassword2" class="focus:outline-none">
+                    <i id="toggleIcon2" class="bi bi-eye-slash fs-4"></i>
                 </button>
             </div>
 

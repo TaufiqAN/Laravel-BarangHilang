@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('komen');
             $table->string('nama');
             $table->string('kelas');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();        
             $table->integer('rating')->nullable();
             $table->integer('likes')->default(0);
             $table->timestamps();

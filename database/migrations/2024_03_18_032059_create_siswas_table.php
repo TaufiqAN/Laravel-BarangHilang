@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
             $table->string('namabarang');
-            $table->integer('status');
             $table->string('gambar')->nullable();
             $table->text('deskripsi');
             $table->bigInteger('nomer');
+            $table->integer('status');
+            $table->boolean('statuspost'); // Status post: 0 untuk aktif, 1 untuk di-suspend
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

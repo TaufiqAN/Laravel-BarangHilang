@@ -11,11 +11,15 @@
     @auth
     <div class="row mb-4">
       <div class="col-lg-1">
-        <img src="{{ asset('img/miaw.jpg') }}" class="rounded-circle" alt="...">
+        <img src="{{ $data->user->photo ? asset('storage/' . $data->user->photo) : asset('img/default-avatar.png') }}" class="rounded-circle" alt="...">
       </div>
       <div class="col-lg-4 align-self-center">
-        <h2 class="fw-bold "> {{ Auth::user()->name }}</h2>
-        <h5 class="bg-success text-light w-20"> X PPLG 1</h5>
+        @if ($data->user)
+          <h2 class="fs-5 fw-bold text-secondary">{{ $data->user->name }}</h2>
+        @else
+          <h2 class="fs-5 fw-bold text-secondary">Pengguna Tidak Diketahui</h2>
+        @endif
+          <h5 class="bg-success text-light w-25">{{ $data->user->kelas }}</h5>
       </div>
     </div>
     @endauth

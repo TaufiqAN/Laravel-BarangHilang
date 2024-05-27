@@ -13,6 +13,7 @@ class Comment extends Model
         'kelas',
         'komen',
         'rating',
+        'user_id',
         'likes',
     ];
 

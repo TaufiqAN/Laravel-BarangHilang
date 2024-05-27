@@ -1,20 +1,26 @@
-
 @if (Session::has('success'))
-<div class="pt-3">
-    <div class="alert alert-success">
-        {{ Session::get('success') }}
+    <div class="pt-3">
+        <div class="alert alert-success">
+            {{ Session::get('success') }}
+        </div>
     </div>
-</div>
 @endif
 
 @if ($errors->any())
-<div class="pt-3">
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $item)
-                <li>{{ $item }}</li>
-            @endforeach
-        </ul>
+    <div class="pt-3">
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
+            </ul>
+        </div>
     </div>
-</div>
- @endif
+@endif
+
+{{-- Alert Suspend --}}
+@if (session('suspendMessage'))
+    <div class="alert alert-warning" role="alert">
+        {{ session('suspendMessage') }}
+    </div>
+@endif

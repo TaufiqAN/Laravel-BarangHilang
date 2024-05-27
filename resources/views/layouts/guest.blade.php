@@ -31,21 +31,39 @@
             </div>
         </div>
 
-         <script>
-            const togglePassword = document.getElementById('togglePassword');
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('toggleIcon');
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const togglePassword = document.getElementById('togglePassword');
+                const passwordInput = document.getElementById('password');
+                const toggleIcon = document.getElementById('toggleIcon');
         
-            togglePassword.addEventListener('click', function() {
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    toggleIcon.classList.remove('bi-eye-slash');
-                    toggleIcon.classList.add('bi-eye');
-                } else {
-                    passwordInput.type = 'password';
-                    toggleIcon.classList.remove('bi-eye');
-                    toggleIcon.classList.add('bi-eye-slash');
-                }
+                togglePassword.addEventListener('click', function() {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        toggleIcon.classList.remove('bi-eye-slash');
+                        toggleIcon.classList.add('bi-eye');
+                    } else {
+                        passwordInput.type = 'password';
+                        toggleIcon.classList.remove('bi-eye');
+                        toggleIcon.classList.add('bi-eye-slash');
+                    }
+                });
+        
+                const togglePassword2 = document.getElementById('togglePassword2');
+                const passwordConfirmationInput = document.getElementById('password_confirmation');
+                const toggleIcon2 = document.getElementById('toggleIcon2');
+        
+                togglePassword2.addEventListener('click', function() {
+                    if (passwordConfirmationInput.type === 'password') {
+                        passwordConfirmationInput.type = 'text';
+                        toggleIcon2.classList.remove('bi-eye-slash');
+                        toggleIcon2.classList.add('bi-eye');
+                    } else {
+                        passwordConfirmationInput.type = 'password';
+                        toggleIcon2.classList.remove('bi-eye');
+                        toggleIcon2.classList.add('bi-eye-slash');
+                    }
+                });
             });
         </script>
     </body>

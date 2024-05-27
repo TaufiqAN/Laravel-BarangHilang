@@ -16,30 +16,32 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
-        Session::flash('nama',$request->nama);
-        Session::flash('kelas',$request->kelas);
-        Session::flash('komen',$request->komen);
-        Session::flash('ranting',$request->ranting);
-
         $request->validate([
             'komen' => 'required|string',
-            'nama' => 'required',
-            'kelas' => 'required',
+            // 'nama' => 'required',
+            // 'kelas' => 'required',
             'rating' => 'required|integer|min:1|max:5',
         ],[
-            'komen.required'=> 'Nama Barang wajib diisi',
-            'nama.required'=> 'Deskripsi wajib diisi',
-            'kelas.required'=> 'Nomer HP wajib diisi',
-            'rating.required'=> 'Nomer HP wajib diisi',
+            'komen.required'=> 'Komentar wajib diisi',
+            'rating.required'=> 'Rating wajib diisi',
+            // 'nama.required'=> 'Deskripsi wajib diisi',
+            // 'kelas.required'=> 'Nomer HP wajib diisi',
         ]);
 
+        $user = auth()->user();
+
         $testi = new Comment();
-        $testi->nama = $request->nama;
-        $testi->kelas = $request->kelas;
+        // $testi->user_id = auth()->user()->id;
+        // $testi->nama = $request->nama;
+        // $testi->kelas = $request->kelas;
+        $testi->user_id = $user->id;
+        $testi->nama = $user->name;
+        $testi->kelas = $user->kelas;
         $testi->komen = $request->komen;
         $testi->rating = $request->rating;
         $testi->save();
-        return Redirect::route('welcome')->with('success', 'Comment added successfully.', 'komen');
+
+        return Redirect::route('welcome')->with('success', 'Komentar berhasil ditambahkan.', 'komen');
     }
 
     public function like(Comment $comment)

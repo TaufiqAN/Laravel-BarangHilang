@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'photo',
+        'kelas',
     ];
 
     /**
@@ -47,6 +48,10 @@ class User extends Authenticatable
 
     public function siswa(){
         return $this->hasMany(siswa::class);
+    }
+
+    public function comment(){
+        return $this->hasMany(Comment::class);
     }
 
     public function likedComments()
