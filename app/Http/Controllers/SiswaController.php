@@ -63,7 +63,6 @@ class SiswaController extends Controller
     }
 
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -127,18 +126,15 @@ class SiswaController extends Controller
      */
     public function show(string $id)
     {
-        // $siswa = Siswa::findOrFail($id);
-        // return view('siswa.edit', compact('siswa'));
+        //
     }
-
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
         $data = siswa::where('namabarang', $id)->first();
-        return view('siswa.edit')->with('data', $data);
+        return view('siswa.edit',)->with('data', $data);
     }
 
     /**
@@ -146,11 +142,42 @@ class SiswaController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Session::flash('namabarang', $request->namabarang);
+        // Session::flash('gambar', $request->gambar);
+        // Session::flash('deskripsi', $request->deskripsi);
+        // Session::flash('nomer', $request->nomer);
+
+        // $request->validate([
+        //     'gambar' => 'nullable|mimes:png,jpg,jpeg',
+        //     'namabarang' => 'required',
+        //     'deskripsi' => 'required',
+        //     'nomer' => 'required|numeric',
+        // ], [
+        //     'namabarang.required' => 'Nama Barang wajib diisi',
+        //     'deskripsi.required' => 'Deskripsi wajib diisi',
+        //     'nomer.required' => 'Nomer HP wajib diisi',
+        //     'nomer.numeric' => 'Nomer HP wajib dengan angka',
+        // ]);
+        // $data = [
+        //     'namabarang' => $request->namabarang,
+        //     'gambar' => $request->gambar,
+        //     'deskripsi' => $request->deskripsi,
+        //     'nomer' => $request->nomer,
+        // ];
+
+
+        // if ($request->file('gambar')) {
+        //     $data['gambar'] = $request->file('gambar')->store('post-images');
+        // }
+
+        // siswa::where('namabarang', $id)->update($data);
+        // return redirect()->to('dashboard')->with('success', 'Berhasil di update');
+
         Session::flash('namabarang', $request->namabarang);
-        Session::flash('gambar', $request->gambar);
         Session::flash('deskripsi', $request->deskripsi);
         Session::flash('nomer', $request->nomer);
 
+        // Validate the request data
         $request->validate([
             'gambar' => 'nullable|mimes:png,jpg,jpeg',
             'namabarang' => 'required',
@@ -162,19 +189,26 @@ class SiswaController extends Controller
             'nomer.required' => 'Nomer HP wajib diisi',
             'nomer.numeric' => 'Nomer HP wajib dengan angka',
         ]);
-        $data = [
-            'namabarang' => $request->namabarang,
-            'gambar' => $request->gambar,
-            'deskripsi' => $request->deskripsi,
-            'nomer' => $request->nomer,
-        ];
 
+        $data = siswa::where('namabarang', $id)->firstOrFail();
 
-        if ($request->file('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('post-images');
+        // Update the student data
+        $data->namabarang = $request->namabarang;
+        $data->deskripsi = $request->deskripsi;
+        $data->nomer = $request->nomer;
+
+        if ($request->hasFile('gambar')) {
+            if ($data->gambar && file_exists(public_path($data->gambar))) {
+                unlink(public_path($data->gambar));
+            }
+
+            // Save new image
+            $gambarPath = $request->file('gambar')->store('post-images');
+            $data->gambar = $gambarPath;
         }
 
-        siswa::where('namabarang', $id)->update($data);
+        $data->save();
+
         return redirect()->to('dashboard')->with('success', 'Berhasil di update');
     }
 
@@ -191,6 +225,6 @@ class SiswaController extends Controller
     public function destroy(string $id)
     {
         siswa::where('namabarang', $id)->delete();
-        return redirect()->to('siswa')->with('success', 'Berhasil di hapus');
+        return redirect()->to('dashboard')->with('success', 'Berhasil di hapus');
     }
 }

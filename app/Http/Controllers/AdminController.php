@@ -20,6 +20,7 @@ class AdminController extends Controller
         // Toggle statuspost (1 untuk active, 0 untuk suspend)
         $barang->statuspost = !$barang->statuspost;
         $barang->save();
+        session()->flash('alertMessage', 'Postingan telah disuspend!');
 
         return redirect()->back()->with('success', 'Status postingan berhasil diubah.');
     }

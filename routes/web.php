@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified', 'role_or_permission:edit-post|admin'])->g
     Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
     Route::resource('siswa', SiswaController::class);
+    // Route::get('/siswa/{id}/edit', 'SiswaController@edit');
     Route::get('/barang/{id}', [DetailController::class, 'show'])->name('barang.detail');
 });
 

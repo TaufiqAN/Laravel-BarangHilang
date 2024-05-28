@@ -34,7 +34,7 @@
                 <tbody>
                     @if ($data->count() > 0)
                         @foreach ($data as $item)
-                            <tr>
+                            <tr class="{{ $item->statuspost == 0 ? 'table-dark' : '' }}">
                                 <td class="text-center fw-bold">
                                     {{ $item->user->name }}
                                 </td>
@@ -47,7 +47,7 @@
                                 <td>{{ Str::limit($item->deskripsi, 120) }}
                                 <td>{{ $item->nomer }}</td>
                                 <td>
-                                    <a href='{{ route('barang.detail', $item->id) }}' class="btn btn-primary m-1"><i
+                                    <a href='{{ route('barang.detail', $item->id) }}' class="btn btn-primary"><i
                                             class="bi bi-eye"></i>Detail</a>
                                     @if ($item->statuspost == 0)
                                         <form onsubmit="return confirm('Yakin ingin mengubah status barang ini?')"
@@ -79,7 +79,7 @@
                                         action="{{ url('siswa/' . $item->namabarang) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" name="submit" class="btn btn-danger m-1"><i
+                                        <button type="submit" name="submit" class="btn btn-danger"><i
                                                 class="bi bi-trash"></i>Hapus</button>
                                     </form>
                                 </td>

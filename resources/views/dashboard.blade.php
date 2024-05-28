@@ -36,34 +36,53 @@
                     @if ($data->count() > 0)
                         @foreach ($data as $item)
                             @if ($item->status == 0)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td><img src="{{ asset('storage/' . $item->gambar) }}" alt=""></td>
-                                    <td>{{ $item->namabarang }}</td>
-                                    <td>{{ $item->deskripsi }}</td>
-                                    <td>{{ $item->nomer }}</td>
-                                    <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                                    <td>
-                                        <a href='{{ url('siswa/' . $item->namabarang . '/edit') }}'
-                                            class="btn btn-warning btn-sm m-1"><i
-                                                class="bi bi-pencil-square"></i>Edit</a>
-                                        <form onsubmit="return confirm('Yakin ingin menghapus?')" class="d-inline"
-                                            action="{{ url('siswa/' . $item->namabarang) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" name="submit" class="btn btn-danger btn-sm m-1"><i
-                                                    class="bi bi-trash"></i>Del</button>
-                                        </form>
-                                        <form onsubmit="return confirm('Yakin barang sudah ditemukan?')"
-                                            class="d-inline" action="{{ route('ketemu', [$item->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('POST')
-                                            <button type="submit" name="submit" class="btn btn-success btn-sm m-1"><i
-                                                    class="bi bi-check2-square"></i>Done</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                @if ($item->statuspost == 0)
+                                    <tr>
+                                        <td colspan="7" class="text-center bg-danger text-light p-5">
+                                            <h3>Postingan ini telah diban karena melanggar kebijakan komunitas.</h3>
+                                            <form onsubmit="return confirm('Yakin ingin menghapus?')" class="d-inline"
+                                                action="{{ url('siswa/' . $item->namabarang) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" name="submit" class="m-1">Hapus postingan
+                                                    ini</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td><img src="{{ asset('storage/' . $item->gambar) }}"
+                                                class="img-fluid object-fit-cover mx-auto" alt=""
+                                                style="height: 150px" width="150px"></td>
+                                        <td>{{ $item->namabarang }}</td>
+                                        <td>{{ Str::limit($item->deskripsi, 150) }}
+                                        <td>{{ $item->nomer }}</td>
+                                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                                        <td>
+                                            <a href='{{ url('siswa/' . $item->namabarang . '/edit') }}'
+                                                class="btn btn-warning btn-sm m-1"><i
+                                                    class="bi bi-pencil-square"></i>Edit</a>
+                                            <form onsubmit="return confirm('Yakin ingin menghapus?')" class="d-inline"
+                                                action="{{ url('siswa/' . $item->namabarang) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" name="submit"
+                                                    class="btn btn-danger btn-sm m-1"><i
+                                                        class="bi bi-trash"></i>Del</button>
+                                            </form>
+                                            <form onsubmit="return confirm('Yakin barang sudah ditemukan?')"
+                                                class="d-inline" action="{{ route('ketemu', [$item->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <button type="submit" name="submit"
+                                                    class="btn btn-success btn-sm m-1"><i
+                                                        class="bi bi-check2-square"></i>Done</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endif
                         @endforeach
                     @else
@@ -94,22 +113,41 @@
                 <tbody>
                     @foreach ($data as $item)
                         @if ($item->status == 1)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td><img src="{{ asset('storage/' . $item->gambar) }}" alt=""></td>
-                                <td>{{ $item->namabarang }}</td>
-                                <td>{{ $item->deskripsi }}</td>
-                                <td>{{ $item->nomer }}</td>
-                                <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                                <td>
-                                    <form class="d-inline" action="{{ route('batal', [$item->id]) }}" method="POST">
-                                        @csrf
-                                        @method('POST')
-                                        <button type="submit" name="submit" class="btn btn-danger btn-sm m-1"><i
-                                                class="bi bi-x-square"></i>Batal</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            @if ($item->statuspost == 0)
+                                <tr>
+                                    <td colspan="7" class="text-center bg-danger text-light p-5">
+                                        <h3>Postingan ini telah diban karena melanggar kebijakan komunitas.</h3>
+                                        <form onsubmit="return confirm('Yakin ingin menghapus?')" class="d-inline"
+                                            action="{{ url('siswa/' . $item->namabarang) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" name="submit" class="m-1 text-primary">Hapus
+                                                postingan
+                                                ini</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td><img src="{{ asset('storage/' . $item->gambar) }}"
+                                            class="img-fluid object-fit-cover mx-auto" alt=""
+                                            style="height: 150px" width="150px"></td>
+                                    <td>{{ $item->namabarang }}</td>
+                                    <td>{{ Str::limit($item->deskripsi, 150) }}
+                                    <td>{{ $item->nomer }}</td>
+                                    <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                                    <td>
+                                        <form class="d-inline" action="{{ route('batal', [$item->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('POST')
+                                            <button type="submit" name="submit" class="btn btn-danger btn-sm m-1"><i
+                                                    class="bi bi-x-square"></i>Batal</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endif
                         @endif
                     @endforeach
                 </tbody>
