@@ -2,26 +2,35 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
         <h1 class="text-center mb-3">Gabung FINDER<span class="text-primary">Track</span></h1>
-        
+
 
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Nama :')" />
-            <x-text-input id="name" class="block mt-1 w-full" placeholder="Masukkan Nama" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-text-input id="name" class="block mt-1 w-full" placeholder="Masukkan Nama" type="text" name="name"
+                :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email Address :')" />
-            <x-text-input id="email" class="block mt-1 w-full" placeholder="Ania*******@gmail.com" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full" placeholder="Ania*******@gmail.com" type="email"
+                name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Kelas -->
         <div class="mt-4">
             <x-input-label for="kelas" :value="__('Kelas :')" />
-            <x-text-input id="kelas" class="block mt-1 w-full" placeholder="Masukkan Kelas" type="text" name="kelas" :value="old('kelas')" required autocomplete="kelas" />
+            <select id="kelas" name="kelas" class="block mt-1 w-full" required>
+                <option value="">Pilih Kelas</option>
+                <option value="10" {{ old('kelas') == '10' ? 'selected' : '' }}>Kelas 10</option>
+                <option value="11" {{ old('kelas') == '11' ? 'selected' : '' }}>Kelas 11</option>
+                <option value="12" {{ old('kelas') == '12' ? 'selected' : '' }}>Kelas 12</option>
+            </select>
+            <x-text-input id="kelas" class="block mt-1 w-full" placeholder="Masukkan Kelas" type="text"
+                name="kelas" :value="old('kelas')" required autocomplete="kelas" />
             <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
         </div>
 
@@ -29,11 +38,8 @@
         <div class="mt-4 relative">
             <x-input-label for="password" :value="__('Password :')" />
 
-            <x-text-input id="password" class="block mt-1 w-full pr-10"
-                            placeholder="Masukkan Password"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <x-text-input id="password" class="block mt-1 w-full pr-10" placeholder="Masukkan Password" type="password"
+                name="password" required autocomplete="new-password" />
 
             <!-- Lihat / Sembunyikan Kata Sandi -->
             <div class="absolute right-0 pr-3 flex items-center text-sm leading-5" style="top: 37px">
@@ -49,10 +55,8 @@
         <div class="mt-4 relative">
             <x-input-label for="password_confirmation" :value="__('Confirm Password :')" />
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full pr-10"
-                            placeholder="Konfirmasi Password"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            <x-text-input id="password_confirmation" class="block mt-1 w-full pr-10" placeholder="Konfirmasi Password"
+                type="password" name="password_confirmation" required autocomplete="new-password" />
 
             <!-- Lihat / Sembunyikan Kata Sandi -->
             <div class="absolute right-0 pr-3 flex items-center text-sm leading-5" style="top: 37px">

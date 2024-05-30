@@ -20,7 +20,7 @@
 
             <!-- TABEL ITEM BELUM SELESAI -->
             <h2 class="pt-4 pb-3 fw-bold">Daftar Barang Pengguna</h2>
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                     <tr class="text-center">
                         <th class="col-md-1">Nama</th>
@@ -34,7 +34,7 @@
                 <tbody>
                     @if ($data->count() > 0)
                         @foreach ($data as $item)
-                            <tr class="{{ $item->statuspost == 0 ? 'table-dark' : '' }}">
+                            <tr class="{{ $item->statuspost == 0 ? 'table-danger' : '' }}">
                                 <td class="text-center fw-bold">
                                     {{ $item->user->name }}
                                 </td>
@@ -75,13 +75,13 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <form onsubmit="return confirm('Yakin ingin menghapus?')" class="d-inline"
+                                    {{-- <form onsubmit="return confirm('Yakin ingin menghapus?')" class="d-inline"
                                         action="{{ url('siswa/' . $item->namabarang) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" name="submit" class="btn btn-danger"><i
                                                 class="bi bi-trash"></i>Hapus</button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

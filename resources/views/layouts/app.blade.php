@@ -40,10 +40,45 @@
         <main>
             @include('komponen.pesan')
             {{ $slot }}
+            {{-- <!-- Alert Suspend-->
+            @if ($suspendedItems->count() > 0)
+                <div class="modal fade" id="suspendModal" tabindex="-1" role="dialog"
+                    aria-labelledby="suspendModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="suspendModalLabel">Peringatan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Postingan Anda berikut telah disuspend:
+                                <ul>
+                                    @foreach ($suspendedItems as $item)
+                                        <li>{{ $item->namabarang }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{{ route('markSuspendedAsSeen') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">OK</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        $('#suspendModal').modal('show');
+                    });
+                </script>
+            @endif --}}
         </main>
 
         {{-- Footer --}}
-        <footer class="footer mt-auto py-3 bg-dark text-white pt-5 ">
+        <footer class="footer mt-auto py-3 text-white pt-5 footer">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 d-flex">
@@ -57,9 +92,9 @@
                     </div>
                     <div class="col-md-2">
                         <h4 class="fw-bold">Menu Utama</h4>
-                        <p>Beranda</p>
-                        <p>Barang</p>
-                        <p>Testi</p>
+                        <p><a href="#1" class="link-footer">Beranda</a></p>
+                        <p><a href="#2" class="link-footer">Barang</a></p>
+                        <p><a href="#3" class="link-footer">Testi</a></p>
                     </div>
                     <div class="col-md-4">
                         <h4 class="fw-bold">Lokasi</h4>

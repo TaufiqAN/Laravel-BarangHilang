@@ -138,8 +138,8 @@
                                     <td>{{ $item->nomer }}</td>
                                     <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                     <td>
-                                        <form class="d-inline" action="{{ route('batal', [$item->id]) }}"
-                                            method="POST">
+                                        <form onsubmit="return confirm('Yakin barang sudah ditemukan?')"
+                                            class="d-inline" action="{{ route('batal', [$item->id]) }}" method="POST">
                                             @csrf
                                             @method('POST')
                                             <button type="submit" name="submit" class="btn btn-danger btn-sm m-1"><i

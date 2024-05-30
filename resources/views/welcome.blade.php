@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="bg-primary bg-opacity-10">
-        <section class="hero mb-5">
+    <div class="hero">
+        <section class="hero" id="1">
             <div class="container">
                 <div class="row flex-column-reverse flex-sm-row">
                     <div class="col-lg-4 align-self-center text-center text-lg-start">
@@ -18,7 +18,7 @@
                                     class="bi bi-cloud-plus me-2"></i>Upload</a>
                         @endauth
                     </div>
-                    <div class="col-lg-8 mb-3">
+                    <div class="col-lg-8">
                         <img src="{{ asset('img/hero.png') }}" alt="Hero Image" class="img-fluid">
                     </div>
                 </div>
@@ -26,85 +26,101 @@
         </section>
     </div>
 
+    @auth
+        @if (Session::has('suspended_post_id') &&
+                Auth::user()->posts &&
+                Auth::user()->posts->contains(Session::get('suspended_post_id')))
+            <script>
+                alert('Postingan Anda telah disuspend oleh admin.');
+            </script>
+            <?php Session::forget('suspended_post_id'); ?>
+        @endif
+    @endauth
+
+
+
     {{-- Barang yang dicari --}}
-    <section class="container">
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
-            <div class="col-6">
-                <h1 class="fw-bold">Saat ini di cari</h1>
-                <p class="mb-5">Mungkin barangmu ada disini</p>
+    <div class="hero2" id="2">
+        <section class="container">
+            <div class="row row-cols-1 row-cols-md-2 g-4 ">
+                <div class="col-6">
+                    <h1 class="fw-bold">Saat ini di cari</h1>
+                    <p class="mb-5">Mungkin barangmu ada disini</p>
+                </div>
+                <div class="col-6">
+                    <form class="d-flex" action="{{ route('welcome') }}" method="get">
+                        <input class="form-control me-1 border border-dark border-1" type="search" name="lagiDicari"
+                            value="{{ Request::get('lagiDicari') }}" placeholder="Cari barang" aria-label="Search">
+                        <button class="btn btn-success py-3" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
+                </div>
             </div>
-            <div class="col-6">
-                <form class="d-flex" action="{{ route('welcome') }}" method="get">
-                    <input class="form-control me-1 border border-dark border-1" type="search" name="lagiDicari"
-                        value="{{ Request::get('lagiDicari') }}" placeholder="Cari barang" aria-label="Search">
-                    <button class="btn btn-success py-3" type="submit"><i class="bi bi-search"></i></button>
-                </form>
-            </div>
-        </div>
-        {{-- Barang yang dicari --}}
-        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-            @foreach ($barangDicari as $item)
-                @if ($item->status == 0 && $item->statuspost == 1)
-                    <div class="col">
-                        <div class="card p-3 border border-dark border-1">
-                            <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top object-fit-cover"
-                                style="height: 300px;" alt="...">
-                            <div class="card-body">
+            {{-- Barang yang dicari --}}
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+                @foreach ($barangDicari as $item)
+                    @if ($item->status == 0 && $item->statuspost == 1)
+                        <div class="col">
+                            <div class="card p-3 border border-dark border-1">
+                                <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top object-fit-cover"
+                                    style="height: 300px;" alt="...">
+                                <div class="card-body">
 
-                                @if (Route::has('login'))
-                                    @auth
-                                        <div class="row mb-4">
-                                            <div class="col-lg-3 col-sm-3 col-3">
-                                                <img src="{{ $item->user->photo ? asset('storage/' . $item->user->photo) : asset('img/default-avatar.png') }}"
-                                                    class="rounded-circle img-fluid" alt="Profile">
-                                            </div>
-                                            <div class="col-lg-8 col-sm-8 col-8 align-self-center">
-                                                @if ($item->user)
-                                                    <h2 class="fs-5 fw-bold text-secondary">{{ $item->user->name }}</h2>
-                                                @else
-                                                    <h2 class="fs-5 fw-bold text-secondary">Pengguna Tidak Diketahui</h2>
-                                                @endif
+                                    @if (Route::has('login'))
+                                        @auth
+                                            <div class="row mb-4">
+                                                <div class="col-lg-3 col-sm-3 col-3">
+                                                    <img src="{{ $item->user->photo ? asset('storage/' . $item->user->photo) : asset('img/default-avatar.png') }}"
+                                                        class="rounded-circle img-fluid" alt="Profile">
+                                                </div>
+                                                <div class="col-lg-8 col-sm-8 col-8 align-self-center">
+                                                    @if ($item->user)
+                                                        <h2 class="fs-5 fw-bold text-secondary">{{ $item->user->name }}</h2>
+                                                    @else
+                                                        <h2 class="fs-5 fw-bold text-secondary">Pengguna Tidak Diketahui
+                                                        </h2>
+                                                    @endif
 
-                                                @if ($item->user && $item->user->kelas)
-                                                    <h5 class="bg-success text-light w-20 fs-6">{{ $item->user->kelas }}
-                                                    </h5>
-                                                @endif
+                                                    @if ($item->user && $item->user->kelas)
+                                                        <h5 class="bg-success text-light w-20 fs-6">{{ $item->user->kelas }}
+                                                        </h5>
+                                                    @endif
+                                                </div>
                                             </div>
+                                        @endauth
+                                    @endif
+                                    <h3 class="card-title fw-bold">{{ $item->namabarang }}</h3>
+                                    <p class="card-text">
+                                        {{ Str::limit($item->deskripsi, 120) }}
+                                    </p>
+
+                                    <div class="row">
+                                        <div class="col fw-bold text-success">
+                                            <p><i class="bi bi-clock me-2"></i>
+                                                {{ $item->created_at->diffForHumans() }}
+                                            </p>
                                         </div>
-                                    @endauth
-                                @endif
-                                <h3 class="card-title fw-bold">{{ $item->namabarang }}</h3>
-                                <p class="card-text">
-                                    {{ Str::limit($item->deskripsi, 120) }}
-                                </p>
-
-                                <div class="row">
-                                    <div class="col fw-bold text-success">
-                                        <p><i class="bi bi-clock me-2"></i> {{ $item->created_at->diffForHumans() }}
-                                        </p>
-                                    </div>
-                                    <div class="col">
-                                        <a href='{{ route('barang.detail', $item->id) }}'
-                                            class="btn btn-outline-dark fw-bold btn-sm float-end">Selengkapnya</a>
+                                        <div class="col">
+                                            <a href='{{ route('barang.detail', $item->id) }}'
+                                                class="btn btn-outline-dark fw-bold btn-sm float-end">Selengkapnya</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endif
-            @endforeach
-        </div>
-        {{-- Tautan Paginasi --}}
-        <div class="d-flex justify-content-center">
-            {{ $barangDicari->links() }}
-        </div>
-    </section>
+                    @endif
+                @endforeach
+            </div>
+            {{-- Tautan Paginasi --}}
+            <div class="d-flex justify-content-center">
+                {{ $barangDicari->links() }}
+            </div>
+        </section>
     </div>
 
     {{-- Sudah ditemukan --}}
-    <div class="bg-primary bg-opacity-10 pb-5">
+    <div class="hero pb-5">
         <section class="container">
-            <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-1">
                 <div class="col-6">
                     <h1 class="fw-bold mb-5">Barang Yang sudah <br> ketemu</h1>
                 </div>
@@ -159,7 +175,7 @@
                                                 <p><i class="bi bi-clock me-2"></i>
                                                     {{ $item->created_at->diffForHumans() }}</p>
                                             </div>
-                                            <div class="col">
+                                            <div class="col" id="3">
                                                 <a href='#122' class="btn btn-success btn-lg float-end">Rating</a>
                                             </div>
                                         </div>
@@ -182,10 +198,10 @@
 
 
     {{-- Testimoni --}}
-    <div class="">
-        <div class="pb-5">
+    <div class="hero3">
+        <div class="pb-5 mb-5">
             <section class="container">
-                <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                <div class="row row-cols-1 row-cols-md-2 g-4 ">
                     <div class="col">
                         <h1 class="fw-bold">Testimoni</h1>
                         <p class="mb-5">Pendapat orang yang telah menemukan barangnya kembali</p>
@@ -249,11 +265,11 @@
     </div>
 
     {{-- Komentar --}}
-    <div class="bg-primary bg-opacity-10" id="122">
+    <div class="hero">
         <section class="container">
-            <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
                 <div class="col">
-                    <h1 class="fw-bold">Komentar</h1>
+                    <h1 class="fw-bold">Ulasan pengguna</h1>
                     <p class="mb-5">Berikan komentar setelah menggunakan website ini</p>
                 </div>
             </div>
@@ -279,7 +295,8 @@
                     </div>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto pb-5 pt-5">
-                    <button type="submit" class="btn btn-success">Kirim</button>
+                    <button type="submit" class="btn fw-bold text-white p-2"
+                        style="background-color: #00A991;">Kirim</button>
                 </div>
             </form>
         </section>

@@ -30,6 +30,7 @@ class SiswaController extends Controller
         return view('dashboard')->with('data', $data);
     }
 
+
     public function beranda(Request $request)
     {
         $lagiDicari = $request->lagiDicari;
@@ -59,8 +60,9 @@ class SiswaController extends Controller
         }
 
         $comments = Comment::with('user')->latest()->limit(4)->get();
-        return view('welcome', compact('barangDicari', 'barangDitemukan', 'comments',));
+        return view('welcome', compact('barangDicari', 'barangDitemukan', 'comments'));
     }
+
 
 
     /**
@@ -142,37 +144,6 @@ class SiswaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Session::flash('namabarang', $request->namabarang);
-        // Session::flash('gambar', $request->gambar);
-        // Session::flash('deskripsi', $request->deskripsi);
-        // Session::flash('nomer', $request->nomer);
-
-        // $request->validate([
-        //     'gambar' => 'nullable|mimes:png,jpg,jpeg',
-        //     'namabarang' => 'required',
-        //     'deskripsi' => 'required',
-        //     'nomer' => 'required|numeric',
-        // ], [
-        //     'namabarang.required' => 'Nama Barang wajib diisi',
-        //     'deskripsi.required' => 'Deskripsi wajib diisi',
-        //     'nomer.required' => 'Nomer HP wajib diisi',
-        //     'nomer.numeric' => 'Nomer HP wajib dengan angka',
-        // ]);
-        // $data = [
-        //     'namabarang' => $request->namabarang,
-        //     'gambar' => $request->gambar,
-        //     'deskripsi' => $request->deskripsi,
-        //     'nomer' => $request->nomer,
-        // ];
-
-
-        // if ($request->file('gambar')) {
-        //     $data['gambar'] = $request->file('gambar')->store('post-images');
-        // }
-
-        // siswa::where('namabarang', $id)->update($data);
-        // return redirect()->to('dashboard')->with('success', 'Berhasil di update');
-
         Session::flash('namabarang', $request->namabarang);
         Session::flash('deskripsi', $request->deskripsi);
         Session::flash('nomer', $request->nomer);
